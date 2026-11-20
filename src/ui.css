@@ -1,0 +1,135 @@
+/* Shared look for the popup and settings page: a quiet beach-motel front desk.
+ * <html data-tone="auto|light|dark"> picks the palette. */
+@font-face { font-family: "GSB Deco"; src: url("../fonts/limelight.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "GSB Sans"; src: url("../fonts/josefin-sans.woff2") format("woff2"); font-weight: 100 700; font-display: swap; }
+
+:root {
+  --bg: #E4F3EE;
+  --sunk: #D6ECE5;
+  --text: #1C3B45;
+  --muted: rgba(28, 59, 69, 0.7);
+  --line: rgba(28, 59, 69, 0.16);
+  --on: #1C3B45;
+  --on-text: #F8ECEE;
+  --slat-hi: #F7CDD5;
+  --slat-mid: #F2B5C1;
+  --slat-lo: #E9A2B1;
+  --slat-edge: #D98A9C;
+  --coral: #E5604F;
+  --brass: #A87B34;
+  color-scheme: light;
+}
+:root[data-tone="dark"] {
+  --bg: #13272E;
+  --sunk: #1A333C;
+  --text: #F3E7E3;
+  --muted: rgba(243, 231, 227, 0.66);
+  --line: rgba(243, 231, 227, 0.14);
+  --on: #F2B5C1;
+  --on-text: #1C3B45;
+  --slat-hi: #E3A9B5;
+  --slat-mid: #D99AA8;
+  --slat-lo: #CC8B9A;
+  --slat-edge: #B47483;
+  --brass: #D2A85E;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tone="light"]):not([data-tone="dark"]) {
+    --bg: #13272E;
+    --sunk: #1A333C;
+    --text: #F3E7E3;
+    --muted: rgba(243, 231, 227, 0.66);
+    --line: rgba(243, 231, 227, 0.14);
+    --on: #F2B5C1;
+    --on-text: #1C3B45;
+    --slat-hi: #E3A9B5;
+    --slat-mid: #D99AA8;
+    --slat-lo: #CC8B9A;
+    --slat-edge: #B47483;
+    --brass: #D2A85E;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 500 15px/1.45 "GSB Sans", Futura, "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+.deco { font-family: "GSB Deco", "Didot", "Bodoni 72", Georgia, serif; font-weight: 400; letter-spacing: 0.01em; }
+.caps { font-weight: 600; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; }
+.muted { color: var(--muted); }
+a { color: inherit; text-underline-offset: 3px; }
+b { font-weight: 700; }
+
+/* The one decoration: a strip of motel blinds with a pull cord. */
+.blinds {
+  position: relative; height: 34px;
+  background:
+    linear-gradient(var(--slat-edge), var(--slat-edge)) 0 0 / 100% 5px no-repeat,
+    repeating-linear-gradient(180deg, var(--slat-hi) 0, var(--slat-mid) 6px, var(--slat-lo) 8px, var(--slat-edge) 9px);
+}
+.blinds::before {
+  content: ""; position: absolute; right: 26px; top: 5px; width: 1.5px; height: calc(100% + 4px); background: var(--brass);
+}
+.blinds::after {
+  content: ""; position: absolute; right: 22.75px; top: calc(100% + 6px); width: 8px; height: 11px; border-radius: 4px;
+  background: radial-gradient(circle at 35% 30%, #F6E3B4 0 15%, #D2A85E 45%, #9C7230 100%);
+}
+
+/* Buttons */
+button { font: inherit; color: inherit; }
+.btn {
+  appearance: none; position: relative; cursor: pointer; user-select: none;
+  padding: 11px 14px 9px; border-radius: 4px; border: 0;
+  box-shadow: inset 0 0 0 1.5px var(--text); background: transparent; color: var(--text);
+  font: 600 12px/1.2 "GSB Sans", Futura, "Century Gothic", system-ui, sans-serif; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.btn:hover { background-color: var(--sunk); }
+.btn.primary { background: var(--on); color: var(--on-text); box-shadow: none; }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn.hold { background: linear-gradient(var(--coral), var(--coral)) 0 0 / 0% 100% no-repeat; }
+.btn.hold:hover { background-color: var(--sunk); }
+.btn.hold.holding { background-size: 100% 100%; transition: background-size var(--hold, 1.5s) linear; box-shadow: inset 0 0 0 1.5px var(--coral); color: #1C3B45; }
+.btn:focus-visible, .switch input:focus-visible + span, .seg input:focus-visible + span,
+textarea:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+
+/* Switch */
+.switch { position: relative; display: inline-flex; width: 42px; height: 24px; flex: none; cursor: pointer; }
+.switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.switch span { position: absolute; inset: 0; border-radius: 12px; background: var(--line); transition: background 0.2s; }
+.switch span::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--bg); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); transition: transform 0.2s;
+}
+.switch input:checked + span { background: var(--on); }
+.switch input:checked + span::after { transform: translateX(18px); }
+
+/* Segmented choice */
+.seg { display: flex; border-radius: 4px; box-shadow: inset 0 0 0 1.5px var(--line); }
+.seg label { flex: 1; position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span {
+  display: block; text-align: center; padding: 9px 6px 7px; border-radius: 4px; cursor: pointer;
+  font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+.seg span:hover { color: var(--text); }
+.seg input:checked + span { background: var(--on); color: var(--on-text); }
+
+textarea {
+  width: 100%; background: var(--sunk); color: var(--text); border: 0; border-radius: 4px;
+  box-shadow: inset 0 0 0 1.5px var(--line); padding: 10px 12px;
+  font: 13px/1.55 ui-monospace, "SF Mono", Menlo, monospace; resize: vertical;
+}
+code { font: 12.5px ui-monospace, "SF Mono", Menlo, monospace; background: var(--sunk); padding: 1px 5px; border-radius: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .switch span, .switch span::after, .seg span { transition: none; }
+}

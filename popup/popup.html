@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoiler Shield</title>
+  <link rel="stylesheet" href="../src/ui.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="blinds" aria-hidden="true"></div>
+
+  <header>
+    <div>
+      <h1 class="deco">Spoiler Shield</h1>
+      <p class="caps muted" id="status">Watching for spoilers</p>
+    </div>
+    <label class="switch" title="Turn the shield on or off (Alt+Shift+G)">
+      <input type="checkbox" id="enabled" aria-label="Shield on">
+      <span></span>
+    </label>
+  </header>
+
+  <p class="tally" id="tally">Nothing to hide on this page.</p>
+
+  <div class="warn" id="perm" hidden>
+    <p><b>I can’t read pages yet.</b> Allow it and I’ll start hiding spoilers.</p>
+    <button class="btn primary" id="grant" type="button">Allow</button>
+  </div>
+
+  <section class="site" id="siteRow">
+    <div class="site-text">
+      <div class="host" id="host">this site</div>
+      <div class="muted small" id="siteState">I’m checking this site</div>
+    </div>
+    <button class="btn" id="siteBtn" type="button">Skip it</button>
+  </section>
+
+  <section class="group">
+    <div class="caps muted label" id="lStrict">How careful</div>
+    <div class="seg" role="radiogroup" aria-labelledby="lStrict">
+      <label><input type="radio" name="strictness" value="standard"><span>Standard</span></label>
+      <label><input type="radio" name="strictness" value="paranoid"><span>Paranoid</span></label>
+    </div>
+    <p class="muted small hint" id="strictHint"></p>
+  </section>
+
+  <section class="group">
+    <div class="caps muted label" id="lStyle">Look</div>
+    <div class="seg five" role="radiogroup" aria-labelledby="lStyle">
+      <label><input type="radio" name="style" value="blinds"><span>Blinds</span></label>
+      <label><input type="radio" name="style" value="awning"><span>Awning</span></label>
+      <label><input type="radio" name="style" value="frosted"><span>Frosted</span></label>
+      <label><input type="radio" name="style" value="blackout"><span>Blackout</span></label>
+      <label><input type="radio" name="style" value="vanish"><span>Vanish</span></label>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="caps muted label" id="lTone">Colours</div>
+    <div class="seg" role="radiogroup" aria-labelledby="lTone">
+      <label><input type="radio" name="tone" value="auto"><span>Auto</span></label>
+      <label><input type="radio" name="tone" value="light"><span>Light</span></label>
+      <label><input type="radio" name="tone" value="dark"><span>Dark</span></label>
+    </div>
+  </section>
+
+  <footer>
+    <button class="btn hold" id="reveal" type="button" title="Hold to show every hidden thing on this page"><span class="lbl">Hold to show all</span></button>
+    <button class="btn" id="settings" type="button">Settings</button>
+  </footer>
+
+  <script src="../src/patterns.js"></script>
+  <script src="popup.js"></script>
+  <script src="../src/access.js"></script>
+</body>
+</html>

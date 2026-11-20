@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>GTA 6 review: everything we know</title>
+<meta property="og:title" content="GTA 6 review">
+<script>
+  window.__sent = [];
+  window.browser = {
+    runtime: { getURL: (p) => '../' + p, sendMessage: (m) => { __sent.push(m); return Promise.resolve(false); }, onMessage: { addListener() {} } },
+    storage: { local: { get: (d) => Promise.resolve(d) }, onChanged: { addListener() {} } },
+  };
+</script>
+<link rel="stylesheet" href="../src/content.css">
+<script src="../src/patterns.js"></script>
+<script src="../src/hanger.js"></script>
+<script src="../src/content.js"></script>
+</head><body><h1>Big spoiler headline</h1><p>Spoiler body text.</p>
+<script>
+  setTimeout(() => {
+    const shield = document.querySelector('gsb-page-shield');
+    window.__results = [
+      (shield ? 'PASS' : 'FAIL') + ' page shield shown',
+      (document.title.includes('Do not disturb') ? 'PASS' : 'FAIL') + ' tab title masked: ' + document.title,
+      (document.documentElement.hasAttribute('data-gsb-locked') ? 'PASS' : 'FAIL') + ' scroll locked',
+    ];
+  }, 800);
+</script>
+</body></html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoiler Shield Settings</title>
+  <link rel="icon" href="../icons/icon.svg">
+  <link rel="stylesheet" href="../src/content.css">
+  <link rel="stylesheet" href="../src/ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="blinds" aria-hidden="true"></div>
+  <main>
+    <header class="hero">
+      <h1 class="deco">Spoiler Shield</h1>
+      <p class="lede">Hides anything about the game, so you can play it without knowing what happens. <span class="muted" id="dodgedLine"></span></p>
+    </header>
+
+    <div class="warn" id="perm" hidden>
+      <p><b>I can’t read pages yet.</b> Allow it and I’ll start hiding spoilers.</p>
+      <button class="btn primary" id="grant" type="button">Allow</button>
+    </div>
+
+    <section class="card">
+      <h2>What to hide</h2>
+      <div class="rows">
+        <label class="row">
+          <div><b>Shield on</b><div class="muted">Turns everything on or off. Alt+Shift+G does the same from any tab.</div></div>
+          <span class="switch"><input type="checkbox" data-key="enabled"><span></span></span>
+        </label>
+        <label class="row">
+          <div><b>Stop spoiler links before they load</b><div class="muted">When a link or search is about the game, you get a stop page instead of the page itself.</div></div>
+          <span class="switch"><input type="checkbox" data-key="blockNavigation"><span></span></span>
+        </label>
+        <label class="row">
+          <div><b>Cover whole pages</b><div class="muted">If a page’s title, headline or tags are about the game, I cover the whole page.</div></div>
+          <span class="switch"><input type="checkbox" data-key="pageShield"><span></span></span>
+        </label>
+        <label class="row">
+          <div><b>Rename tabs</b><div class="muted">A tab title can give things away, so I change it to “Do not disturb”.</div></div>
+          <span class="switch"><input type="checkbox" data-key="maskTitles"><span></span></span>
+        </label>
+        <label class="row">
+          <div><b>Pause videos</b><div class="muted">Stops autoplay and hover previews on covered pages and hidden posts.</div></div>
+          <span class="switch"><input type="checkbox" data-key="pauseMedia"><span></span></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>How strict</h2>
+      <div class="seg" role="radiogroup" aria-label="Strictness">
+        <label><input type="radio" name="strictness" value="standard"><span>Standard</span></label>
+        <label><input type="radio" name="strictness" value="paranoid"><span>Paranoid</span></label>
+      </div>
+      <p class="muted" id="strictHint"></p>
+      <p class="muted small">I check <span id="patternCount"></span> built-in patterns. They aren’t listed here because the list itself would spoil names and places.</p>
+    </section>
+
+    <section class="card">
+      <h2>How hidden posts look</h2>
+      <div class="seg" role="radiogroup" aria-label="Hide style">
+        <label><input type="radio" name="style" value="blinds"><span>Blinds</span></label>
+      <label><input type="radio" name="style" value="awning"><span>Awning</span></label>
+        <label><input type="radio" name="style" value="frosted"><span>Frosted</span></label>
+        <label><input type="radio" name="style" value="blackout"><span>Blackout</span></label>
+        <label><input type="radio" name="style" value="vanish"><span>Vanish</span></label>
+      </div>
+      <p class="muted" id="styleHint"></p>
+      <h3 class="caps muted subhead">Colours</h3>
+      <div class="seg" role="radiogroup" aria-label="Colours">
+        <label><input type="radio" name="tone" value="auto"><span>Auto</span></label>
+        <label><input type="radio" name="tone" value="light"><span>Light</span></label>
+        <label><input type="radio" name="tone" value="dark"><span>Dark</span></label>
+      </div>
+      <p class="muted">Auto follows your computer’s light or dark mode. This applies to hidden posts, covered pages and the stop page.</p>
+      <div class="preview">
+        <div class="demo" id="demo1">
+          <div class="thumb"></div>
+          <div><b>That twist everyone keeps talking about</b><div class="muted">1.2M views · 3 hours ago</div></div>
+        </div>
+        <div class="demo" id="demo2">
+          <div class="thumb alt"></div>
+          <div><b>Easy weeknight pasta</b><div class="muted">48K views · 1 day ago</div></div>
+        </div>
+      </div>
+      <p class="muted small">Press and hold the hidden card for a second to see it. A normal click won’t open it, so you can’t do it by accident.</p>
+    </section>
+
+    <section class="card">
+      <h2>Your own words</h2>
+      <p class="muted">Anything else you want hidden, one per line. Matching ignores case, and a space also matches a dash or a dot. For a regular expression, wrap it in slashes, like <code>/trailer\s*\d/</code>. You can also select text on a page, right-click and choose <i>Hide anything that mentions…</i></p>
+      <textarea id="customKeywords" rows="5" spellcheck="false" placeholder="a streamer who only plays it&#10;a character’s nickname"></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Sites to skip</h2>
+      <p class="muted">I won’t hide anything on these sites or their subdomains. One per line.</p>
+      <textarea id="allowlist" rows="4" spellcheck="false" placeholder="example.com"></textarea>
+    </section>
+
+    <section class="card tips-firefox">
+      <h2>Worth changing in Firefox</h2>
+      <ul class="muted tips">
+        <li>Extensions can’t filter address-bar suggestions. In Settings › Search, turn off <i>search suggestions</i>; under Settings › Privacy, turn off <i>Firefox Suggest</i>.</li>
+        <li>On the New Tab page, turn off <i>Recommended stories</i> and trending searches.</li>
+        <li>Private windows: in about:addons › Spoiler Shield, set <i>Run in Private Windows</i> to Allow.</li>
+        <li>Muting words on X and Reddit, and “Not interested” on YouTube, catch things before they reach the page.</li>
+      </ul>
+    </section>
+
+    <section class="card tips-chrome" hidden>
+      <h2>Worth changing in Chrome</h2>
+      <ul class="muted tips">
+        <li>Extensions can’t filter address-bar suggestions. In Settings › Sync and Google services, turn off <i>Autocomplete searches and URLs</i> and <i>Trending searches</i>.</li>
+        <li>On the New Tab page, use <i>Customize Chrome</i> to hide shortcuts and Discover / story cards.</li>
+        <li>Incognito: chrome://extensions › Spoiler Shield › Details › <i>Allow in Incognito</i>.</li>
+        <li>Muting words on X and Reddit, and “Not interested” on YouTube, catch things before they reach the page.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <span id="saved" class="saved caps">Saved</span>
+      <button class="btn" id="resetStats" type="button">Reset the count</button>
+    </footer>
+  </main>
+  <script src="../src/patterns.js"></script>
+  <script src="options.js"></script>
+  <script src="../src/access.js"></script>
+</body>
+</html>

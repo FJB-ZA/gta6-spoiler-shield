@@ -1,0 +1,259 @@
+/* GTA VI Spoiler Shield: how hidden things look on web pages.
+ * content.js also injects this file into shadow roots, so keep it self-contained. */
+
+/* Fonts are declared at document level so shadow roots can use them too.
+   Firefox resolves the first URL, Chrome the second. */
+@font-face {
+  font-family: "GSB Deco";
+  src: url("moz-extension://__MSG_@@extension_id__/fonts/limelight.woff2") format("woff2"),
+       url("chrome-extension://__MSG_@@extension_id__/fonts/limelight.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "GSB Sans";
+  src: url("moz-extension://__MSG_@@extension_id__/fonts/josefin-sans.woff2") format("woff2"),
+       url("chrome-extension://__MSG_@@extension_id__/fonts/josefin-sans.woff2") format("woff2");
+  font-weight: 100 700;
+  font-display: swap;
+}
+
+/* Palette. Light is the default; dark swaps the same names. */
+[data-gsb] {
+  --gsb-stripe-a: #F2B5C1 !important;
+  --gsb-stripe-b: #EAA5B4 !important;
+  --gsb-valance: #DE8C9F !important;
+  --gsb-wall: #BFE3D8 !important;
+  --gsb-glass: rgba(228, 243, 238, 0.86) !important;
+  --gsb-glass-line: rgba(28, 59, 69, 0.12) !important;
+  --gsb-block: #1C3B45 !important;
+  --gsb-tag: #1C3B45 !important;
+  --gsb-tag-text: #F8ECEE !important;
+  --gsb-hold: #E5604F !important;
+  --gsb-slat-hi: #EEF8F4 !important;
+  --gsb-slat-mid: #DCEFE8 !important;
+  --gsb-slat-lo: #C3DED5 !important;
+  --gsb-slat-edge: #A9CBC0 !important;
+  --gsb-rail: #A9CBC0 !important;
+}
+[data-gsb][data-gsb-tone="dark"] {
+  --gsb-stripe-a: #23434D !important;
+  --gsb-stripe-b: #1D3A43 !important;
+  --gsb-valance: #B9798A !important;
+  --gsb-wall: #13272E !important;
+  --gsb-glass: rgba(19, 39, 46, 0.86) !important;
+  --gsb-glass-line: rgba(243, 231, 227, 0.1) !important;
+  --gsb-block: #0B171B !important;
+  --gsb-tag: #F2B5C1 !important;
+  --gsb-tag-text: #1C3B45 !important;
+  --gsb-slat-hi: #26464F !important;
+  --gsb-slat-mid: #1F3D46 !important;
+  --gsb-slat-lo: #17323B !important;
+  --gsb-slat-edge: #0E232A !important;
+  --gsb-rail: #0E232A !important;
+}
+@media (prefers-color-scheme: dark) {
+  [data-gsb][data-gsb-tone="auto"] {
+    --gsb-stripe-a: #23434D !important;
+    --gsb-stripe-b: #1D3A43 !important;
+    --gsb-valance: #B9798A !important;
+    --gsb-wall: #13272E !important;
+    --gsb-glass: rgba(19, 39, 46, 0.86) !important;
+    --gsb-glass-line: rgba(243, 231, 227, 0.1) !important;
+    --gsb-block: #0B171B !important;
+    --gsb-tag: #F2B5C1 !important;
+    --gsb-tag-text: #1C3B45 !important;
+    --gsb-slat-hi: #26464F !important;
+    --gsb-slat-mid: #1F3D46 !important;
+    --gsb-slat-lo: #17323B !important;
+    --gsb-slat-edge: #0E232A !important;
+    --gsb-rail: #0E232A !important;
+  }
+}
+
+[data-gsb][data-gsb-pos] { position: relative !important; }
+[data-gsb][data-gsb-inline] { display: inline-block !important; vertical-align: middle !important; }
+
+[data-gsb="blinds"],
+[data-gsb="awning"],
+[data-gsb="frosted"],
+[data-gsb="blackout"] {
+  color: transparent !important;
+  text-shadow: none !important;
+  user-select: none !important;
+  -moz-user-select: none !important;
+  cursor: help !important;
+  overflow: clip !important;
+  isolation: isolate !important;
+  min-height: 24px !important;
+  min-width: 24px !important;
+}
+[data-gsb="blinds"] *,
+[data-gsb="awning"] *,
+[data-gsb="frosted"] *,
+[data-gsb="blackout"] * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -moz-user-select: none !important;
+}
+[data-gsb="blinds"] > *,
+[data-gsb="awning"] > *,
+[data-gsb="frosted"] > *,
+[data-gsb="blackout"] > * {
+  filter: blur(18px) saturate(0.15) !important;
+}
+[data-gsb="blinds"] img, [data-gsb="blinds"] video, [data-gsb="blinds"] canvas, [data-gsb="blinds"] picture,
+[data-gsb="awning"] img, [data-gsb="awning"] video, [data-gsb="awning"] canvas, [data-gsb="awning"] picture,
+[data-gsb="frosted"] img, [data-gsb="frosted"] video, [data-gsb="frosted"] canvas, [data-gsb="frosted"] picture,
+[data-gsb="blackout"] img, [data-gsb="blackout"] video, [data-gsb="blackout"] canvas, [data-gsb="blackout"] picture {
+  opacity: 0.35 !important;
+}
+
+/* ::after is the cover, ::before is the little tag on top of it. */
+[data-gsb="blinds"]::after,
+[data-gsb="awning"]::after,
+[data-gsb="frosted"]::after,
+[data-gsb="blackout"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+/* Blinds (default): closed motel window blinds. Holding opens the slats. */
+@property --gsb-open { syntax: "<length>"; inherits: false; initial-value: 0px; }
+[data-gsb="blinds"]::after {
+  --gsb-open: 0px;
+  background:
+    linear-gradient(var(--gsb-rail), var(--gsb-rail)) 0 0 / 100% 4px no-repeat,
+    repeating-linear-gradient(180deg,
+      var(--gsb-slat-hi) 0,
+      var(--gsb-slat-mid) calc(7px - var(--gsb-open)),
+      var(--gsb-slat-lo) calc(9px - var(--gsb-open)),
+      var(--gsb-slat-edge) calc(10px - var(--gsb-open)),
+      transparent calc(10px - var(--gsb-open)),
+      transparent 10px) !important;
+  box-shadow: inset 0 0 0 1px var(--gsb-glass-line) !important;
+}
+[data-gsb="blinds"][data-gsb-holding]::after { animation: gsb-open 1.2s ease-in forwards !important; }
+@keyframes gsb-open { from { --gsb-open: 0px; } to { --gsb-open: 8px; } }
+
+/* Awning: a striped beach-motel awning with a scalloped edge. */
+[data-gsb="awning"]::after {
+  background:
+    radial-gradient(circle at 50% 0, var(--gsb-valance) 0 9.5px, transparent 10px) 0 100% / 20px 10px repeat-x,
+    linear-gradient(var(--gsb-valance), var(--gsb-valance)) 0 calc(100% - 10px) / 100% 6px no-repeat,
+    repeating-linear-gradient(90deg, var(--gsb-stripe-a) 0 14px, var(--gsb-stripe-b) 14px 28px) 0 0 / 100% calc(100% - 10px) no-repeat,
+    var(--gsb-wall) !important;
+}
+
+/* Frosted: seafoam glass. */
+[data-gsb="frosted"]::after {
+  background: var(--gsb-glass) !important;
+  box-shadow: inset 0 0 0 1px var(--gsb-glass-line) !important;
+  backdrop-filter: blur(16px) saturate(0.6) !important;
+}
+
+/* Blackout: a plain censor block. */
+[data-gsb="blackout"]::after {
+  background: var(--gsb-block) !important;
+}
+
+/* The tag. */
+[data-gsb="blinds"]::before,
+[data-gsb="awning"]::before,
+[data-gsb="frosted"]::before,
+[data-gsb="blackout"]::before {
+  content: "Possible spoiler \00b7  hold to see" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 2147483001 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: max-content !important;
+  max-width: calc(100% - 12px) !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 6px 11px 4px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, -50%) !important;
+  filter: none !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12) !important;
+  outline: 0 !important;
+  text-align: center !important;
+  text-indent: 0 !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+  font: 600 10.5px/1.2 "GSB Sans", Futura, "Century Gothic", "Avenir Next", system-ui, sans-serif !important;
+  letter-spacing: 0.14em !important;
+  color: var(--gsb-tag-text) !important;
+  background-color: var(--gsb-tag) !important;
+  background-image: linear-gradient(var(--gsb-hold), var(--gsb-hold)) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  background-size: 0% 100%;
+}
+/* Sit the awning's tag a little higher, clear of the scallops. */
+[data-gsb="awning"]::before { top: calc((100% - 10px) / 2) !important; }
+[data-gsb="blackout"]::before {
+  content: "Possible spoiler \00b7  hold to see" !important;
+  color: #F2B5C1 !important;
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 1px rgba(242, 181, 193, 0.55) !important;
+}
+/* Small inline things (a word, a chip) only get room for a short tag. */
+[data-gsb][data-gsb-inline]::before {
+  content: "Spoiler" !important;
+  padding: 3px 6px 2px !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.1em !important;
+}
+[data-gsb="awning"][data-gsb-inline]::after {
+  background: repeating-linear-gradient(90deg, var(--gsb-stripe-a) 0 8px, var(--gsb-stripe-b) 8px 16px) !important;
+}
+[data-gsb="awning"][data-gsb-inline]::before { top: 50% !important; }
+
+/* Holding: the tag fills with coral, left to right. */
+[data-gsb][data-gsb-holding]::before {
+  content: "Keep holding\2026" !important;
+  color: #fff !important;
+  animation: gsb-hold 1.2s linear forwards !important;
+}
+@keyframes gsb-hold { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+
+[data-gsb="vanish"] { display: none !important; }
+
+[data-gsb-revealed] { animation: gsb-reveal 0.45s ease-out !important; }
+@keyframes gsb-reveal { from { filter: blur(10px); } to { filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) {
+  [data-gsb-revealed] { animation: none !important; }
+  [data-gsb="blinds"][data-gsb-holding]::after { animation: none !important; }
+}
+
+/* Page shield: lock scrolling underneath. */
+html[data-gsb-locked], html[data-gsb-locked] > body { overflow: hidden !important; }
