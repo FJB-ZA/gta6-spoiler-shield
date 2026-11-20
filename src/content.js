@@ -1,4 +1,4 @@
-/* GTA VI Spoiler Shield: content script.
+/* Spoiler Shield for GTA VI: content script.
  * Runs at document_start in every frame. It fails closed: it shields with the
  * default (strictest) settings until the saved settings arrive. */
 (() => {

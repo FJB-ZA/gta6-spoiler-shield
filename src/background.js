@@ -1,4 +1,4 @@
-/* GTA VI Spoiler Shield: background (event page). */
+/* Spoiler Shield for GTA VI: background (event page). */
 'use strict';
 
 // Chrome runs this as a service worker (no manifest script list), Firefox as an event page.

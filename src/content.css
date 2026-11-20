@@ -1,4 +1,4 @@
-/* GTA VI Spoiler Shield: how hidden things look on web pages.
+/* Spoiler Shield for GTA VI: how hidden things look on web pages.
  * content.js also injects this file into shadow roots, so keep it self-contained. */
 
 /* Fonts are declared at document level so shadow roots can use them too.

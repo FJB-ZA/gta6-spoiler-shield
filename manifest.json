@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "GTA VI Spoiler Shield",
+  "name": "Spoiler Shield for GTA VI",
   "short_name": "Spoiler Shield",
   "version": "1.1.0",
   "description": "Keeps GTA VI spoilers off your screen: posts, videos, thumbnails, tags, tab titles and whole pages, wherever you browse.",
@@ -12,7 +12,7 @@
     "128": "icons/icon-128.png"
   },
   "action": {
-    "default_title": "GTA VI Spoiler Shield",
+    "default_title": "Spoiler Shield for GTA VI",
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icons/icon-16.png",

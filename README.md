@@ -1,4 +1,4 @@
-# GTA VI Spoiler Shield (Firefox + Chrome)
+# Spoiler Shield for GTA VI (Firefox + Chrome)
 
 Hides everything about GTA VI on every website, before it gets a chance to paint.
 
@@ -94,6 +94,9 @@ of the stop page.
 - `node tests/matcher.test.js`: unit tests for the detection patterns.
 - `tests/dom.html`: opens the real content script against realistic markup. Copy the project to a folder whose path doesn't contain the game's name first, or the page shield (correctly) covers the test page.
 - Build both browsers: `./build.sh`. `manifest.json` is Firefox's, `manifest.chrome.json` is Chrome's; all other files are shared.
+
+## Privacy
+Nothing is collected or sent anywhere. See [PRIVACY.md](PRIVACY.md).
 
 ## Licence
 MIT, see [LICENSE](LICENSE). The bundled fonts keep their own licence (SIL Open Font License, see `fonts/README.txt`).
